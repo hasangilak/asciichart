@@ -65,8 +65,15 @@ export class DynamicMatrix {
     // Copy existing content
     for (let row = 0; row < this.height; row++) {
       for (let col = 0; col < this.width; col++) {
-        if (row < this.data.length && col < this.data[row].length) {
-          newMatrix[row][col] = this.data[row][col];
+        if (row < this.data.length && this.data[row]) {
+          const sourceRow = this.data[row];
+          if (sourceRow && col < sourceRow.length) {
+            const cellValue = sourceRow[col];
+            const targetRow = newMatrix[row];
+            if (cellValue !== undefined && targetRow) {
+              targetRow[col] = cellValue;
+            }
+          }
         }
       }
     }
@@ -132,6 +139,10 @@ export class DynamicMatrix {
     }
     
     const prevCandle = this.candles[this.candles.length - 1];
+    if (!prevCandle) {
+      this.addFirstCandle(candle);
+      return;
+    }
     const prevClose = prevCandle.closePrice;
     
     // Calculate new candle's price levels
@@ -141,10 +152,10 @@ export class DynamicMatrix {
     
     // Add visual separation for same-type transitions
     const visualSeparation = 1;
-    if (prevCandle.type === 'bullish' && candle.type === 'bullish') {
+    if (prevCandle && prevCandle.type === 'bullish' && candle.type === 'bullish') {
       // Bullish to bullish: move up by 1 for visual separation
       openPrice += visualSeparation;
-    } else if (prevCandle.type === 'bearish' && candle.type === 'bearish') {
+    } else if (prevCandle && prevCandle.type === 'bearish' && candle.type === 'bearish') {
       // Bearish to bearish: move down by 1 for visual separation
       openPrice -= visualSeparation;
     }
@@ -175,7 +186,7 @@ export class DynamicMatrix {
     
     const positioned: PositionedCandle = {
       ...candle,
-      column: prevCandle.column + 6, // More spacing between candles
+      column: prevCandle ? prevCandle.column + 6 : 3, // More spacing between candles
       highPrice,
       openPrice,
       closePrice,
@@ -220,9 +231,11 @@ export class DynamicMatrix {
     // Draw each candle
     for (let i = 0; i < this.candles.length; i++) {
       const candle = this.candles[i];
-      candle.column = currentColumn;
-      this.drawCandle(candle);
-      currentColumn += 6; // Consistent spacing between candles
+      if (candle) {
+        candle.column = currentColumn;
+        this.drawCandle(candle);
+        currentColumn += 6; // Consistent spacing between candles
+      }
     }
   }
   
@@ -270,7 +283,9 @@ export class DynamicMatrix {
    */
   private setCell(row: number, col: number, char: string): void {
     if (row >= 0 && row < this.height && col >= 0 && col < this.width) {
-      this.data[row][col] = char;
+      if (this.data[row]) {
+        this.data[row][col] = char;
+      }
     }
   }
   
@@ -305,23 +320,3 @@ export class DynamicMatrix {
   }
 }
 
-// Test the dynamic matrix
-if (import.meta.main) {
-  console.log('=== Dynamic Matrix Test ===\n');
-  
-  const matrix = new DynamicMatrix();
-  
-  // Add first candle: bearish with body=3, upper=1, lower=2
-  console.log('Adding first bearish candle (body=3, upper=1, lower=2)...');
-  matrix.addCandle({ type: 'bearish', bodySize: 3, upperWick: 1, lowerWick: 2 });
-  console.log('Matrix after first candle:');
-  console.log(matrix.toString());
-  console.log(`Dimensions: ${JSON.stringify(matrix.getDimensions())}\n`);
-  
-  // Add second candle: bullish with body=2, upper=1, lower=1
-  console.log('Adding bullish candle (body=2, upper=1, lower=1)...');
-  matrix.addCandle({ type: 'bullish', bodySize: 2, upperWick: 1, lowerWick: 1 });
-  console.log('Matrix after second candle:');
-  console.log(matrix.toString());
-  console.log(`Dimensions: ${JSON.stringify(matrix.getDimensions())}\n`);
-}

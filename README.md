@@ -10,6 +10,44 @@ The library uses a **dynamic 2D matrix** where:
 - The matrix dynamically expands as candles are added
 - Axes are added only during final rendering (not part of core matrix)
 
+## Installation
+
+### Install from npm
+
+```bash
+npm install asciicandlechart
+```
+
+or with yarn:
+
+```bash
+yarn add asciicandlechart
+```
+
+or with bun:
+
+```bash
+bun add asciicandlechart
+```
+
+### Install from GitHub
+
+Install the latest version directly from GitHub:
+
+```bash
+npm install git+https://github.com/hasangilak/asciichart.git
+```
+
+or add to your `package.json`:
+
+```json
+{
+  "dependencies": {
+    "asciichart": "github:hasangilak/asciichart"
+  }
+}
+```
+
 ## Features
 
 - ✅ **Dynamic Dimensions**: Starts with 7x7 default, expands automatically

@@ -4,7 +4,7 @@
  * Demonstrates proper matrix-based rendering with dynamic dimensions
  */
 
-import { MatrixASCIIChart } from './index';
+import { MatrixASCIIChart } from './index.js';
 
 console.log('=== Dynamic Matrix ASCII Chart Tests ===\n');
 

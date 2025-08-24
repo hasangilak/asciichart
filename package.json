@@ -1,0 +1,38 @@
+{
+  "name": "asciicandlechart",
+  "version": "1.0.0",
+  "description": "A powerful ASCII chart library for rendering candlestick charts in the terminal using a dynamic matrix-based approach",
+  "type": "module",
+  "main": "index.ts",
+  "types": "index.ts",
+  "scripts": {
+    "test": "bun test.ts"
+  },
+  "keywords": [
+    "ascii",
+    "chart",
+    "candlestick",
+    "terminal",
+    "console",
+    "matrix",
+    "visualization"
+  ],
+  "author": "",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hasangilak/asciichart.git"
+  },
+  "bugs": {
+    "url": "https://github.com/hasangilak/asciichart/issues"
+  },
+  "homepage": "https://github.com/hasangilak/asciichart#readme",
+  "files": [
+    "index.ts",
+    "core-matrix.ts",
+    "README.md"
+  ],
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

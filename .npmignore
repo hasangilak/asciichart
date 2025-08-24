@@ -1,0 +1,31 @@
+# Test files
+test.ts
+*.test.ts
+*.spec.ts
+
+# Documentation files (except README)
+*.md
+!README.md
+
+# Configuration files
+.gitignore
+.npmignore
+tsconfig.json
+bun.lockb
+
+# Development files
+.vscode/
+.claude
+.idea/
+*.log
+node_modules/
+coverage/
+.env
+
+# Build artifacts
+dist/
+build/
+*.js
+*.js.map
+*.d.ts
+!index.d.ts
